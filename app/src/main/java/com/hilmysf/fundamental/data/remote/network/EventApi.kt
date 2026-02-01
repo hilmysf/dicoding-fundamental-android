@@ -1,7 +1,7 @@
 package com.hilmysf.fundamental.data.remote.network
 
-import com.hilmysf.fundamental.data.remote.request.EventListResponse
-import com.hilmysf.fundamental.data.remote.request.EventResponse
+import com.hilmysf.fundamental.data.remote.response.EventListResponse
+import com.hilmysf.fundamental.data.remote.response.EventResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

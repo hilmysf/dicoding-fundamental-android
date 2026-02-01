@@ -10,7 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.hilmysf.fundamental.data.remote.request.Event
+import com.hilmysf.fundamental.data.remote.response.Event
 import com.hilmysf.fundamental.databinding.FragmentUpcomingBinding
 import com.hilmysf.fundamental.domain.model.ResultState
 import com.hilmysf.fundamental.presentation.adapter.VerticalEventAdapter

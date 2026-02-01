@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.hilmysf.fundamental.R
-import com.hilmysf.fundamental.data.remote.request.Event
+import com.hilmysf.fundamental.data.remote.response.Event
 import com.hilmysf.fundamental.databinding.FragmentHomeBinding
 import com.hilmysf.fundamental.domain.model.ResultState
 import com.hilmysf.fundamental.presentation.adapter.HorizontalEventAdapter
@@ -43,6 +43,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         setupAdapter()
+        viewModel.getUpcomingEvents()
+        viewModel.getFinishedEvents()
         observeUpcomingEvents()
         observeFinishedEvents()
         onClick()

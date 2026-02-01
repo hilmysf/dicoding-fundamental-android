@@ -1,4 +1,4 @@
-package com.hilmysf.fundamental.data.remote.request
+package com.hilmysf.fundamental.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 

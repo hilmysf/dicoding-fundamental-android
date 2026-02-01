@@ -1,11 +1,11 @@
 package com.hilmysf.fundamental.data.repository
 
 import com.hilmysf.fundamental.data.remote.network.EventApi
-import com.hilmysf.fundamental.data.remote.request.Event
+import com.hilmysf.fundamental.data.remote.response.Event
 import com.hilmysf.fundamental.domain.model.ResultState
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 interface EventRepository {
     fun getEvents(
@@ -34,7 +34,7 @@ class EventRepositoryImpl @Inject constructor(private val eventApi: EventApi) : 
         }
     }
 
-    override fun getEventById(id: Int): Flow<ResultState<Event>>  = flow {
+    override fun getEventById(id: Int): Flow<ResultState<Event>> = flow {
         emit(ResultState.Loading)
         try {
             val response = eventApi.getEventById(

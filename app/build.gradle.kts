@@ -55,6 +55,8 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.glide)
     implementation(libs.bundles.network)
+
+    //Hilt
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 

@@ -15,7 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.hilmysf.fundamental.R
-import com.hilmysf.fundamental.data.remote.request.Event
+import com.hilmysf.fundamental.data.remote.response.Event
 import com.hilmysf.fundamental.databinding.ActivityDetailEventBinding
 import com.hilmysf.fundamental.domain.model.ResultState
 import dagger.hilt.android.AndroidEntryPoint
@@ -101,10 +101,14 @@ class DetailEventActivity : AppCompatActivity() {
     private fun showError(isError: Boolean, errorMessage: String = "") {
         binding.apply {
             if (isError) {
+                btnRegister.visibility = View.GONE
+                frameLayout.visibility = View.GONE
                 errorState.visibility = View.VISIBLE
                 errorState.text = errorMessage
             } else {
                 errorState.visibility = View.GONE
+                btnRegister.visibility = View.VISIBLE
+                frameLayout.visibility = View.VISIBLE
             }
         }
     }
