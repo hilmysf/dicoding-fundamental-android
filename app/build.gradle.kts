@@ -61,4 +61,6 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.shimmer)
+    implementation(libs.data.store)
+    implementation(libs.data.store.core)
 }
