@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Dicoding Android Fundamental Submission 1</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="finished">Finished</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="waktu_mulai">Waktu Mulai</string>
+    <string name="hingga">Hingga</string>
+    <string name="foto_event">Foto event</string>
+    <string name="owner_name">• Owner Name</string>
+    <string name="event_name">Event Name</string>
+    <string name="event_desc">Event Desc</string>
+    <string name="mulai">Mulai</string>
+    <string name="waktu_selesai">Waktu Selesai</string>
+    <string name="lokasi_acara">Lokasi Acara</string>
+    <string name="kuota_peserta">Kuota Peserta</string>
+    <string name="informasi">Informasi</string>
+    <string name="error_message">error message</string>
+    <string name="register">Register</string>
+    <string name="title">title</string>
+    <string name="title_desc">title desc</string>
+    <string name="dicoding_events">Dicoding Events</string>
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="lihat_semua">Lihat Semua</string>
+    <string name="finished_events">Finished Events</string>
+    <string name="dari">%1$d dari %2$d</string>
+</resources>

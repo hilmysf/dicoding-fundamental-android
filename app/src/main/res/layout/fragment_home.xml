@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        tools:context=".presentation.home.HomeFragment">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TextAppearance.Material3.HeadlineSmall.Emphasized"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dicoding_events"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_upcoming_events"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/upcoming_events"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:id="@+id/btn_view_all_upcoming_events"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/lihat_semua"
+            android:textColor="#FF6200EE"
+            app:layout_constraintBottom_toBottomOf="@id/tv_upcoming_events"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_upcoming_events" />
+
+        <FrameLayout
+            android:id="@+id/container_horizontal_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_upcoming_events">
+
+            <!--Loading State-->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_horizontal_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:shimmer_auto_start="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/horizontal_item_placeholder" />
+
+                    <include layout="@layout/horizontal_item_placeholder" />
+
+                    <include layout="@layout/horizontal_item_placeholder" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <!--Loaded State-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_horizontal_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/horizontal_event_item" />
+
+            <!--Error State-->
+            <TextView
+                android:id="@+id/error_state_horizontal_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/error_message"
+                android:textAlignment="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_finished_events"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/finished_events"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_horizontal_events" />
+
+        <TextView
+            android:id="@+id/btn_view_all_finished_events"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/lihat_semua"
+            android:textColor="#FF6200EE"
+            app:layout_constraintBottom_toBottomOf="@id/tv_finished_events"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_finished_events" />
+
+        <FrameLayout
+            android:id="@+id/container_vertical_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_finished_events">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_vertical_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:shimmer_auto_start="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/list_item_placeholder" />
+
+                    <include layout="@layout/list_item_placeholder" />
+
+                    <include layout="@layout/list_item_placeholder" />
+
+                    <include layout="@layout/list_item_placeholder" />
+
+                    <include layout="@layout/list_item_placeholder" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_vertical_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/event_list_item" />
+
+            <!--Error State-->
+            <TextView
+                android:id="@+id/error_state_vertical_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/error_message"
+                android:textAlignment="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

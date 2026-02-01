@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_fragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/upcoming" />
+    <item
+        android:id="@+id/upcoming_fragment"
+        android:icon="@drawable/ic_upcoming"
+        android:title="@string/upcoming" />
+    <item
+        android:id="@+id/finished_fragment"
+        android:icon="@drawable/ic_finished"
+        android:title="@string/finished" />
+</menu>
