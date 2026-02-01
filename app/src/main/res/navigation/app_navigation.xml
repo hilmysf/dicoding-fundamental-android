@@ -35,4 +35,9 @@
             app:popUpTo="@id/app_navigation"
             app:popUpToInclusive="false" />
     </fragment>
+    <fragment
+        android:id="@+id/setting_fragment"
+        android:name="com.hilmysf.fundamental.presentation.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

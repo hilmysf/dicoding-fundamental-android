@@ -12,4 +12,8 @@
         android:id="@+id/finished_fragment"
         android:icon="@drawable/ic_finished"
         android:title="@string/finished" />
+    <item
+        android:id="@+id/setting_fragment"
+        android:icon="@drawable/ic_setting"
+        android:title="@string/setting" />
 </menu>
