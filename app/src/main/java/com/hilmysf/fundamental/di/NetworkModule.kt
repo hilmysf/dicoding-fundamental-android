@@ -48,10 +48,12 @@ class NetworkModule {
     }
 }
 
+@Suppress("unused")
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
     @Binds
+    @Singleton
     abstract fun providesEventRepository(repository: EventRepositoryImpl): EventRepository
 }
