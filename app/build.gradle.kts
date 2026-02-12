@@ -44,6 +44,9 @@ android {
             property("sonar.host.url", "https://your-sonarqube-server.com")
             // Point to XML reports for test coverage
             property("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/testDebugUnitTestReport/testDebugUnitTestReport.xml")
+            property("sonar.android.lint.reportPaths", "build/reports/lint-results-debug.xml")
+            // Pastikan mengarah ke variant yang benar
+            property("sonar.android.variant", "debug")
         }
     }
     kotlin {
