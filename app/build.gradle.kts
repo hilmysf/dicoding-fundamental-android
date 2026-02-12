@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.org.sonarqube)
 }
 
 android {
@@ -13,11 +14,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        android {
-            defaultConfig {
-                this.buildConfigField("String", "BASE_URL", "\"https://event-api.dicoding.dev/\"")
-            }
-        }
+        buildConfigField("String", "BASE_URL", "\"https://event-api.dicoding.dev/\"")
         applicationId = "com.hilmysf.fundamental"
         minSdk = 24
         targetSdk = 36
@@ -40,9 +37,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-//    kotlinOptions {
-//        jvmTarget = "11"
-//    }
+    sonar {
+        properties {
+            property("sonar.projectName", "Your-Project-Name")
+            property("sonar.projectKey", "Your-Unique-Project-Key")
+            property("sonar.host.url", "https://your-sonarqube-server.com")
+            // Point to XML reports for test coverage
+            property("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/testDebugUnitTestReport/testDebugUnitTestReport.xml")
+        }
+    }
     kotlin {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11
