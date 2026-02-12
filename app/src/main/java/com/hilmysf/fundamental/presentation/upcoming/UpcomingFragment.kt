@@ -10,18 +10,19 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.hilmysf.fundamental.data.remote.response.Event
 import com.hilmysf.fundamental.databinding.FragmentUpcomingBinding
+import com.hilmysf.fundamental.domain.model.Event
 import com.hilmysf.fundamental.domain.model.ResultState
+import com.hilmysf.fundamental.presentation.adapter.OnEventClickListener
 import com.hilmysf.fundamental.presentation.adapter.VerticalEventAdapter
 import com.hilmysf.fundamental.presentation.detail.DetailEventActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UpcomingFragment : Fragment() {
+class UpcomingFragment : Fragment(), OnEventClickListener {
     private lateinit var binding: FragmentUpcomingBinding
     private val viewModel: UpcomingViewModel by activityViewModels()
-    private val eventAdapter: VerticalEventAdapter by lazy { VerticalEventAdapter() }
+    private val eventAdapter: VerticalEventAdapter by lazy { VerticalEventAdapter(onEventClickListener = this) }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,11 +56,6 @@ class UpcomingFragment : Fragment() {
     private fun setupAdapter() {
         binding.apply {
             rvEvents.adapter = eventAdapter
-        }
-        eventAdapter.setOnItemClick {
-            val intent = Intent(requireContext(), DetailEventActivity::class.java)
-            intent.putExtra(DetailEventActivity.EXTRA_EVENT_ID, it.id)
-            startActivity(intent)
         }
     }
 
@@ -103,5 +99,15 @@ class UpcomingFragment : Fragment() {
     private fun showVerticalError(isError: Boolean, errorMessage: String = "") {
         binding.errorStateVerticalEvents.isVisible = isError
         binding.errorStateVerticalEvents.text = errorMessage
+    }
+
+    override fun onEventClick(event: Event) {
+        val intent = Intent(requireContext(), DetailEventActivity::class.java)
+        intent.putExtra(DetailEventActivity.EXTRA_EVENT_ID, event.id)
+        startActivity(intent)
+    }
+
+    override fun onBookmarkClick(event: Event) {
+        viewModel.onBookmarkClick(event)
     }
 }

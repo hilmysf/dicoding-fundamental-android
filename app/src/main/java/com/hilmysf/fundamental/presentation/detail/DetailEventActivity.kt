@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,12 +16,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.hilmysf.fundamental.R
-import com.hilmysf.fundamental.data.remote.response.Event
 import com.hilmysf.fundamental.databinding.ActivityDetailEventBinding
+import com.hilmysf.fundamental.domain.model.Event
 import com.hilmysf.fundamental.domain.model.ResultState
+import com.hilmysf.fundamental.helper.DateHelper
+import com.hilmysf.fundamental.presentation.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @AndroidEntryPoint
 class DetailEventActivity : AppCompatActivity() {
@@ -44,6 +45,18 @@ class DetailEventActivity : AppCompatActivity() {
         viewModel.getEvent(eventId)
         observeEvent()
         onClick()
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (isTaskRoot) {
+                    val intent = Intent(this@DetailEventActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
     }
 
     private fun onClick() {
@@ -64,8 +77,8 @@ class DetailEventActivity : AppCompatActivity() {
                 event.description,
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
-            tvStart.text = formatEventDate(event.beginTime)
-            tvEnd.text = formatEventDate(event.endTime)
+            tvStart.text = DateHelper.formatDate(event.beginTime)
+            tvEnd.text = DateHelper.formatDate(event.endTime)
             tvLocation.text = event.cityName
             val availableQuota = event.quota - event.registrants
             tvQuota.text = getString(R.string.dari, availableQuota, event.quota)
@@ -115,7 +128,7 @@ class DetailEventActivity : AppCompatActivity() {
 
 
     private fun observeEvent() {
-        viewModel.event.observe(this) {
+        viewModel.eventResponse.observe(this) {
             when (it) {
                 is ResultState.Success -> {
                     showLoading(false)
@@ -137,13 +150,4 @@ class DetailEventActivity : AppCompatActivity() {
             }
         }
     }
-}
-
-fun formatEventDate(inputDate: String): String? {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-    val outputFormat =
-        SimpleDateFormat("HH:mm dd MMMM yyyy", Locale("id", "ID"))
-    val date = inputFormat.parse(inputDate)
-    val result = date?.let { outputFormat.format(it) }
-    return result
 }

@@ -1,20 +1,23 @@
 package com.hilmysf.fundamental.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hilmysf.fundamental.data.remote.response.Event
-import com.hilmysf.fundamental.data.repository.EventRepository
+import com.hilmysf.fundamental.domain.model.Event
 import com.hilmysf.fundamental.domain.model.ResultState
+import com.hilmysf.fundamental.domain.usecase.DeleteEventBookmarkUseCase
+import com.hilmysf.fundamental.domain.usecase.GetEventsWithBookmarksUseCase
+import com.hilmysf.fundamental.domain.usecase.InsertEventBookmarkUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val eventRepository: EventRepository
+    private val getEventsWithBookmarksUseCase: GetEventsWithBookmarksUseCase,
+    private val deleteEventBookmarkUseCase: DeleteEventBookmarkUseCase,
+    private val insertEventBookmarkUseCase: InsertEventBookmarkUseCase
 ) : ViewModel() {
     val upcomingEvents: MutableLiveData<ResultState<List<Event>>> by lazy {
         MutableLiveData<ResultState<List<Event>>>()
@@ -29,11 +32,10 @@ class HomeViewModel @Inject constructor(
     fun getUpcomingEvents(forceLoad: Boolean = false, query: String? = null) {
         if (forceLoad || !isUpcomingDataLoaded) {
             viewModelScope.launch {
-                eventRepository.getEvents(
+                getEventsWithBookmarksUseCase(
                     active = 1,
                     query = query
                 ).debounce(500L).collect {
-                    Log.d("TAG", "getEvents: $it")
                     upcomingEvents.postValue(it)
                     if (it is ResultState.Success) {
                         isUpcomingDataLoaded = true
@@ -46,16 +48,25 @@ class HomeViewModel @Inject constructor(
     fun getFinishedEvents(forceLoad: Boolean = false, query: String? = null) {
         if (forceLoad || !isFinishedDataLoaded) {
             viewModelScope.launch {
-                eventRepository.getEvents(
+                getEventsWithBookmarksUseCase(
                     active = 0,
                     query = query
                 ).debounce(500L).collect {
-                    Log.d("TAG", "getEvents: $it")
                     finishedEvents.postValue(it)
                     if (it is ResultState.Success) {
                         isFinishedDataLoaded = true
                     }
                 }
+            }
+        }
+    }
+
+    fun onBookmarkClick(event: Event) {
+        viewModelScope.launch {
+            if (event.isBookmarked) {
+                deleteEventBookmarkUseCase(event)
+            } else {
+                insertEventBookmarkUseCase(event)
             }
         }
     }

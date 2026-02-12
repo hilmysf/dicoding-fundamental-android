@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -11,6 +13,11 @@ android {
     compileSdk = 36
 
     defaultConfig {
+        android {
+            defaultConfig {
+                this.buildConfigField("String", "BASE_URL", "\"https://event-api.dicoding.dev/\"")
+            }
+        }
         applicationId = "com.hilmysf.fundamental"
         minSdk = 24
         targetSdk = 36
@@ -33,10 +40,16 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
+//    kotlinOptions {
+//        jvmTarget = "11"
+//    }
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_11
+        }
     }
     buildFeatures {
+        buildConfig = true
         viewBinding = true
     }
 }
@@ -47,6 +60,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.hilt.common)
+    implementation(libs.androidx.hilt.work)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -59,8 +74,17 @@ dependencies {
     //Hilt
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+    ksp(libs.hilt.ext.compiler)
 
     implementation(libs.shimmer)
     implementation(libs.data.store)
     implementation(libs.data.store.core)
+
+    //Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+    //Work Manager
+    implementation(libs.worker.runtime)
 }

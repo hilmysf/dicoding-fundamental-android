@@ -2,7 +2,6 @@ package com.hilmysf.fundamental.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,20 +12,26 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.hilmysf.fundamental.R
-import com.hilmysf.fundamental.data.remote.response.Event
 import com.hilmysf.fundamental.databinding.FragmentHomeBinding
+import com.hilmysf.fundamental.domain.model.Event
 import com.hilmysf.fundamental.domain.model.ResultState
 import com.hilmysf.fundamental.presentation.adapter.HorizontalEventAdapter
+import com.hilmysf.fundamental.presentation.adapter.OnEventClickListener
 import com.hilmysf.fundamental.presentation.adapter.VerticalEventAdapter
+import com.hilmysf.fundamental.presentation.bookmark.BookmarkActivity
 import com.hilmysf.fundamental.presentation.detail.DetailEventActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), OnEventClickListener {
     private lateinit var navController: NavController
-    private val horizontalEventAdapter: HorizontalEventAdapter by lazy { HorizontalEventAdapter(5) }
-    private val verticalEventAdapter: VerticalEventAdapter by lazy { VerticalEventAdapter(5) }
+    private val horizontalEventAdapter: HorizontalEventAdapter by lazy {
+        HorizontalEventAdapter(
+            5,
+            this
+        )
+    }
+    private val verticalEventAdapter: VerticalEventAdapter by lazy { VerticalEventAdapter(5, this) }
     private lateinit var binding: FragmentHomeBinding
 
     private val viewModel: HomeViewModel by activityViewModels()
@@ -59,7 +64,6 @@ class HomeFragment : Fragment() {
                         )
                     )
                 }
-
             }
             btnViewAllUpcomingEvents.setOnClickListener {
                 if (navController.currentDestination?.id == R.id.home_fragment) {
@@ -68,12 +72,9 @@ class HomeFragment : Fragment() {
                     )
                 }
             }
-            horizontalEventAdapter.setOnItemClick { item ->
-                navigateToDetail(item.id)
-
-            }
-            verticalEventAdapter.setOnItemClick { item ->
-                navigateToDetail(item.id)
+            btnBookmarkList.setOnClickListener {
+                val intent = Intent(requireActivity(), BookmarkActivity::class.java)
+                startActivity(intent)
             }
         }
     }
@@ -129,7 +130,6 @@ class HomeFragment : Fragment() {
 
     private fun observeUpcomingEvents() {
         val eventsObserver = Observer<ResultState<List<Event>>> { result ->
-            Log.d("TAG", "observeEvents: $result")
             when (result) {
                 is ResultState.Success -> {
                     showHorizontalLoading(false)
@@ -154,7 +154,6 @@ class HomeFragment : Fragment() {
 
     private fun observeFinishedEvents() {
         val eventsObserver = Observer<ResultState<List<Event>>> { result ->
-            Log.d("TAG", "observeEvents: $result")
             when (result) {
                 is ResultState.Success -> {
                     showVerticalLoading(false)
@@ -175,5 +174,13 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.finishedEvents.observe(viewLifecycleOwner, eventsObserver)
+    }
+
+    override fun onEventClick(event: Event) {
+        navigateToDetail(event.id)
+    }
+
+    override fun onBookmarkClick(event: Event) {
+        viewModel.onBookmarkClick(event)
     }
 }

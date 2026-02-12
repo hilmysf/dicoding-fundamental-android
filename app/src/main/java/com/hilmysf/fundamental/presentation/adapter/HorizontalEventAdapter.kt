@@ -6,34 +6,52 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.hilmysf.fundamental.data.remote.response.Event
 import com.hilmysf.fundamental.databinding.HorizontalEventItemBinding
+import com.hilmysf.fundamental.domain.model.Event
 
 class HorizontalEventAdapter(
-    private val maxItemCount: Int? = null
+    private val maxItemCount: Int? = null,
+    private val onEventClickListener: OnEventClickListener
 ) :
     ListAdapter<Event, HorizontalEventAdapter.ViewHolder>(DiffCallback) {
-    private var onItemClick: ((Event) -> Unit)? = null
-    fun setOnItemClick(onClick: (Event) -> Unit) {
-        onItemClick = onClick
-    }
 
     inner class ViewHolder(private val binding: HorizontalEventItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Event) {
             binding.apply {
                 tvTitle.text = item.name
+                val isBookmarked = item.isBookmarked
+                btnBookmark.setImageResource(
+                    if (isBookmarked) {
+                        com.hilmysf.fundamental.R.drawable.ic_bookmark_filled
+                    } else {
+                        com.hilmysf.fundamental.R.drawable.ic_bookmark_outlined
+                    }
+
+                )
                 Glide.with(itemView.context)
                     .load(item.mediaCover)
                     .into(imgEvent)
 
             }
-            itemView.setOnClickListener {
-                onItemClick?.invoke(item)
-            }
         }
 
-
+        init {
+            itemView.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val event = getItem(position)
+                    onEventClickListener.onEventClick(event)
+                }
+            }
+            binding.btnBookmark.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val event = getItem(position)
+                    onEventClickListener.onBookmarkClick(event)
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {

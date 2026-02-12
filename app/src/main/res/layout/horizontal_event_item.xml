@@ -15,8 +15,8 @@
             android:id="@+id/img_event"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
             android:contentDescription="@string/foto_event"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +36,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_event" />
+
+        <ImageButton
+            android:id="@+id/btn_bookmark"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/fill_circle_background"
+            android:contentDescription="@string/bookmark_button"
+            android:elevation="4dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_bookmark_outlined"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@id/img_event"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_event" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

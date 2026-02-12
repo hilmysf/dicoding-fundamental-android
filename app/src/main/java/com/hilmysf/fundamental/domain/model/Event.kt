@@ -1,54 +1,26 @@
-package com.hilmysf.fundamental.data.remote.response
+package com.hilmysf.fundamental.domain.model
 
-import com.google.gson.annotations.SerializedName
-import com.hilmysf.fundamental.domain.model.Event
+import com.hilmysf.fundamental.data.local.room.EventEntity
 
-
-data class EventResponse(
-    @SerializedName("id")
+data class Event(
     val id: Int,
-
-    @SerializedName("name")
     val name: String,
-
-    @SerializedName("summary")
     val summary: String,
-
-    @SerializedName("description")
     val description: String,
-
-    @SerializedName("imageLogo")
     val imageLogo: String,
-
-    @SerializedName("mediaCover")
     val mediaCover: String,
-
-    @SerializedName("category")
     val category: String,
-
-    @SerializedName("ownerName")
     val ownerName: String,
-
-    @SerializedName("cityName")
     val cityName: String,
-
-    @SerializedName("quota")
     val quota: Int,
-
-    @SerializedName("registrants")
     val registrants: Int,
-
-    @SerializedName("beginTime")
     val beginTime: String,
-
-    @SerializedName("endTime")
     val endTime: String,
-
-    @SerializedName("link")
-    val link: String
-){
-    fun toDomain(): Event {
-        return Event(
+    val link: String,
+    val isBookmarked: Boolean = false
+) {
+    fun toEntity(): EventEntity {
+        return EventEntity(
             id = id,
             name = name,
             summary = summary,
@@ -62,7 +34,7 @@ data class EventResponse(
             registrants = registrants,
             beginTime = beginTime,
             endTime = endTime,
-            link = link
+            link = link,
         )
     }
 }

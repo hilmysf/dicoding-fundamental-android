@@ -20,6 +20,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/btn_bookmark_list"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Bookmark Button"
+            android:src="@drawable/ic_bookmarks"
+            app:tint="@color/design_default_color_primary"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title" />
+
         <TextView
             android:id="@+id/tv_upcoming_events"
             style="@style/TextAppearance.Material3.TitleMedium"

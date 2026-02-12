@@ -24,4 +24,6 @@
     <string name="finished_events">Finished Events</string>
     <string name="dari">%1$d dari %2$d</string>
     <string name="setting">Setting</string>
+    <string name="bookmark_button">Bookmark Button</string>
+    <string name="bookmark">Bookmark</string>
 </resources>

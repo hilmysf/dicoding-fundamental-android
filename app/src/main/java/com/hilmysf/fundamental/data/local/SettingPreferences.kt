@@ -1,6 +1,5 @@
 package com.hilmysf.fundamental.data.local
 
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -10,31 +9,30 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SettingPreferences @Inject constructor(private val dataStore: DataStore<Preferences>) {
-    private val THEME_KEY = booleanPreferencesKey("theme_setting")
-    private val REMINDER_KEY = booleanPreferencesKey("reminder_setting")
+    private val themeKey = booleanPreferencesKey("theme_setting")
+    private val reminderKey = booleanPreferencesKey("reminder_setting")
 
     fun getThemeSetting(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
-            preferences[THEME_KEY] ?: false
+            preferences[themeKey] ?: false
         }
     }
 
     suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
         dataStore.edit { preferences ->
-            preferences[THEME_KEY] = isDarkModeActive
+            preferences[themeKey] = isDarkModeActive
         }
     }
 
     fun getReminderSetting(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
-            preferences[REMINDER_KEY] ?: false
+            preferences[reminderKey] ?: false
         }
     }
 
     suspend fun saveReminderSetting(dailyReminder: Boolean) {
-        Log.d("SettingPreferences", "saveReminderSetting: $dailyReminder")
         dataStore.edit { preferences ->
-            preferences[REMINDER_KEY] = dailyReminder
+            preferences[reminderKey] = dailyReminder
         }
     }
 

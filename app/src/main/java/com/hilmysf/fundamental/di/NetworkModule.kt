@@ -1,8 +1,9 @@
 package com.hilmysf.fundamental.di
 
+import com.hilmysf.fundamental.BuildConfig
 import com.hilmysf.fundamental.data.remote.network.EventApi
-import com.hilmysf.fundamental.data.repository.EventRepository
 import com.hilmysf.fundamental.data.repository.EventRepositoryImpl
+import com.hilmysf.fundamental.domain.repository.EventRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -21,8 +22,11 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
-        val loggingInterceptor =
+        val loggingInterceptor = if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        } else {
+            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+        }
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .build()
@@ -33,7 +37,7 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://event-api.dicoding.dev/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
