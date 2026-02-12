@@ -102,9 +102,7 @@ class UpcomingFragment : Fragment(), OnEventClickListener {
     }
 
     override fun onEventClick(event: Event) {
-        val intent = Intent(requireContext(), DetailEventActivity::class.java)
-        intent.putExtra(DetailEventActivity.EXTRA_EVENT_ID, event.id)
-        startActivity(intent)
+        DetailEventActivity.start(requireContext(), event.id)
     }
 
     override fun onBookmarkClick(event: Event) {

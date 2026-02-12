@@ -1,5 +1,6 @@
 package com.hilmysf.fundamental.presentation.detail
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -27,8 +28,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailEventActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_EVENT_ID = "extra_event_id"
+        fun start(context: Context, eventId: Int) {
+            val intent = Intent(context, DetailEventActivity::class.java).apply {
+                putExtra(EXTRA_EVENT_ID, eventId)
+            }
+            context.startActivity(intent)
+        }
     }
-
     private lateinit var binding: ActivityDetailEventBinding
     private val viewModel: DetailEventViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {

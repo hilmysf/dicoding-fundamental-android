@@ -1,6 +1,5 @@
 package com.hilmysf.fundamental.presentation.finished
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -106,9 +105,7 @@ class FinishedFragment : Fragment(), OnEventClickListener {
     }
 
     override fun onEventClick(event: Event) {
-        val intent = Intent(requireContext(), DetailEventActivity::class.java)
-        intent.putExtra(DetailEventActivity.EXTRA_EVENT_ID, event.id)
-        startActivity(intent)
+        DetailEventActivity.start(requireContext(), event.id)
     }
 
     override fun onBookmarkClick(event: Event) {
